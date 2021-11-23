@@ -1,5 +1,6 @@
 package br.com.example.desafiotecnico.service;
 
+import br.com.example.desafiotecnico.dto.IniciarVotacaoDto;
 import br.com.example.desafiotecnico.dto.PautaDto;
 import br.com.example.desafiotecnico.entity.Pauta;
 import br.com.example.desafiotecnico.exception.BadRequestException;
@@ -13,7 +14,10 @@ import org.quartz.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -27,8 +31,8 @@ public class PautaService {
 
     public PautaDto save(PautaDto pautaDto) {
         Pauta entity = pautaMapper.toEntity(pautaDto);
-        Pauta aux = findByNome(entity.getNome());
-        if (aux != null) {
+        Optional<Pauta> aux = repository.findByNome(entity.getNome());
+        if (aux.isPresent()) {
             throw new BadRequestException("Já existe uma pauta com o nome '"+entity.getNome()+"'!");
         }
         log.debug("Salvando pauta " + entity.toString());
@@ -44,10 +48,10 @@ public class PautaService {
     }
 
     @SneakyThrows
-    public Pauta iniciarVotacao(Long id, Long tempo) {
-        Pauta entity = findById(id);
+    public Pauta iniciarVotacao(IniciarVotacaoDto votacaoDto) {
+        Pauta entity = findByNome(votacaoDto.getPauta());
         log.debug("Iniciando votação da pauta {}", entity.getNome());
-        entity.setDuracao(tempo != null ? tempo : 1000);
+        entity.setDuracao(votacaoDto.getDuracao() != null ? votacaoDto.getDuracao() : 1000);
         entity.setDataInicioVotacao(new Date());
         entity.setAberta(true);
         log.debug("Criando timer para encerramento da votação com duração de {}ms", entity.getDuracao());
@@ -64,10 +68,12 @@ public class PautaService {
                 .build();
     }
 
-    private SimpleTrigger trigger(JobDetail jobDetail, long milliseconds) {
+    private Trigger trigger(JobDetail jobDetail, long milliseconds) {
+        LocalDateTime ldt = LocalDateTime.now();
+        ldt = ldt.plusSeconds(milliseconds/1000);
         return TriggerBuilder.newTrigger().forJob(jobDetail)
                 .withIdentity(jobDetail.getKey().getName(), jobDetail.getKey().getGroup())
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMilliseconds(milliseconds))
+                .startAt(Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant()))
                 .build();
     }
 

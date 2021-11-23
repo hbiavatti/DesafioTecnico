@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -52,9 +53,13 @@ public class VotoService {
         return votoDto;
     }
 
-    public boolean validaCpfAssiciado(String cpfAssociado) {
+    private boolean validaCpfAssiciado(String cpfAssociado) {
         try {
-            RestTemplate restTemplate = new RestTemplate();
+            HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+            httpRequestFactory.setConnectionRequestTimeout(10000);
+            httpRequestFactory.setConnectTimeout(10000);
+            httpRequestFactory.setReadTimeout(30000);
+            RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
             ResponseEntity<ValidaCpf> response = restTemplate.getForEntity(URL + cpfAssociado, ValidaCpf.class);
             if (response.getStatusCode().equals(HttpStatus.OK)) {
                 return response.getBody().getStatus().equals(StatusCpf.ABLE_TO_VOTE);

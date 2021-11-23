@@ -1,13 +1,15 @@
 package br.com.example.desafiotecnico.entity;
 
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @ToString(onlyExplicitlyIncluded = true)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Voto {
 
 	@Id

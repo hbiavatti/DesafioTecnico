@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-    context-path: /desafio/api
+    context-path: /desafio
 spring:
   application:
     name: DesafioTecnico
