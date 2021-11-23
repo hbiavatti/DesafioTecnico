@@ -33,6 +33,5 @@ services:
       - "3306:3306"
     volumes:
       - desafio_data:/var/lib/mysql
-    mem_limit: 1024m
 volumes:
   desafio_data:
