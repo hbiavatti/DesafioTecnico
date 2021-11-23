@@ -17,7 +17,7 @@ public class Pauta {
 
     @Id
     @EqualsAndHashCode.Include
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Nome da pauta deve ser informado!")
     @Column(nullable = false, unique = true)

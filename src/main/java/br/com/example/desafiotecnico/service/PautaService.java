@@ -36,7 +36,7 @@ public class PautaService {
             throw new BadRequestException("Já existe uma pauta com o nome '" + entity.getNome() + "'!");
         }
         log.debug("Salvando pauta " + entity);
-        return pautaMapper.toDto(repository.saveAndFlush(entity));
+        return pautaMapper.toDto(repository.save(entity));
     }
 
     public PautaDto findById(Long id) {
@@ -48,8 +48,7 @@ public class PautaService {
     }
 
     public PautaDto findByNome(String nome) {
-        Pauta p = findByNomeOrThrowBadRequestException(nome);
-        return pautaMapper.toDto(p);
+        return pautaMapper.toDto(findByNomeOrThrowBadRequestException(nome));
     }
 
     public Pauta findByNomeOrThrowBadRequestException(String nome) {
@@ -59,14 +58,16 @@ public class PautaService {
     @SneakyThrows
     public Pauta iniciarVotacao(IniciarVotacaoDto votacaoDto) {
         Pauta entity = findByNomeOrThrowBadRequestException(votacaoDto.getPauta());
-        log.debug("Iniciando votação da pauta {}", entity.getNome());
-        entity.setDuracao(votacaoDto.getDuracao() != null ? votacaoDto.getDuracao() : 1000);
-        entity.setDataInicioVotacao(new Date());
-        entity.setAberta(true);
-        log.debug("Criando timer para encerramento da votação com duração de {}ms", entity.getDuracao());
-        JobDetail job = newJob(entity.getNome(), "Finaliza votação pauta " + entity.getNome());
-        scheduler.scheduleJob(job, trigger(job, entity.getDuracao()));
-        return repository.saveAndFlush(entity);
+        if (!entity.isAberta()) {
+            log.debug("Iniciando votação da pauta {}", entity.getNome());
+            entity.setDuracao(votacaoDto.getDuracao() != null ? votacaoDto.getDuracao() : 1000);
+            entity.setDataInicioVotacao(new Date());
+            entity.setAberta(true);
+            log.debug("Criando timer para encerramento da votação com duração de {}ms", entity.getDuracao());
+            JobDetail job = newJob(entity.getNome(), "Finaliza votação pauta " + entity.getNome());
+            scheduler.scheduleJob(job, trigger(job, entity.getDuracao()));
+        }
+        return repository.save(entity);
     }
 
     private JobDetail newJob(String identity, String description) {

@@ -2,7 +2,6 @@ package br.com.example.desafiotecnico.controller;
 
 import br.com.example.desafiotecnico.dto.IniciarVotacaoDto;
 import br.com.example.desafiotecnico.dto.PautaDto;
-import br.com.example.desafiotecnico.entity.Pauta;
 import br.com.example.desafiotecnico.service.PautaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -62,7 +61,7 @@ public class PautaController {
             @ApiResponse(responseCode = "400", description = "Pauta inválida."),
     })
     public ResponseEntity<Void> start(@RequestBody @Validated IniciarVotacaoDto votacaoDto) {
-        Pauta p = pautaService.iniciarVotacao(votacaoDto);
+        pautaService.iniciarVotacao(votacaoDto);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

@@ -38,7 +38,7 @@ class VotoControllerTest {
         ).doesNotThrowAnyException();
         ResponseEntity<Void> entity = votoController.save(VotoDtoCreator.createVotoDto());
         Assertions.assertThat(entity).isNotNull();
-        Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     }
 
 }

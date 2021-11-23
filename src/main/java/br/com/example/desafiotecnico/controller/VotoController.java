@@ -30,6 +30,6 @@ public class VotoController {
     })
     public ResponseEntity<Void> save(@RequestBody @Validated VotoDto votoDto) {
         votoService.save(votoDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

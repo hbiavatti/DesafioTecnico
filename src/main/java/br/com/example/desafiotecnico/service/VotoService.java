@@ -54,11 +54,7 @@ public class VotoService {
 
     private boolean validaCpfAssiciado(String cpfAssociado) {
         try {
-            HttpComponentsClientHttpRequestFactory httpRequestFactory = new HttpComponentsClientHttpRequestFactory();
-            httpRequestFactory.setConnectionRequestTimeout(10000);
-            httpRequestFactory.setConnectTimeout(10000);
-            httpRequestFactory.setReadTimeout(30000);
-            RestTemplate restTemplate = new RestTemplate(httpRequestFactory);
+            RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<ValidaCpf> response = restTemplate.getForEntity(URL + cpfAssociado, ValidaCpf.class);
             if (response.getStatusCode().equals(HttpStatus.OK)) {
                 return response.getBody().getStatus().equals(StatusCpf.ABLE_TO_VOTE);

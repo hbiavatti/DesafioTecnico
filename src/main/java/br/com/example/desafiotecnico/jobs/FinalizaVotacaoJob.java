@@ -29,7 +29,7 @@ public class FinalizaVotacaoJob implements Job {
         if (entity.isPresent()) {
             log.debug("Finalizando votação da pauta {}", entity.get().getNome());
             entity.get().setAberta(false);
-            pautaRepository.saveAndFlush(entity.get());
+            pautaRepository.save(entity.get());
             log.debug("Votação da pauta {} finalizada com sucesso!", entity.get().getNome());
             log.debug("Iniciando contagem de votos da pauta {}", entity.get().getNome());
             List<Voto> votos = votoRepository.findAllByPauta(entity.get());

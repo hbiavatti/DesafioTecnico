@@ -14,8 +14,21 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 [IntelliJ IDEA](https://www.jetbrains.com/pt-br/idea/download/).
 
 ### 🎲 Rodando o Back End (servidor)
-# Clone este repositório
+## Clone este repositório
 $ git clone <https://github.com/hbiavatti/DesafioTecnico.git>
 ####Abra o projeto com a IDE IntelliJ IDEA e espere carregar as dependências maven.
 ####Acesse a aba terminal e rode o comando docker-compose up, após rodar o comando com sucesso inicie a aplicação java através da classe DesafioTecnicoApplication.java
-####Abra uma janela no navegador e digite (http://localhost:8080/desafio/swagger-ui.html) para ver a documentação da API.
+####Para ver a documentação da API acesse http://localhost:8080/desafio/swagger-ui.html.
+
+### 🛠 Tecnologias
+
+As seguintes ferramentas foram usadas na construção do projeto:
+
+- [Java](https://aws.amazon.com/pt/corretto/)
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [Quartz](http://www.quartz-scheduler.org/)
+- [MySQL](https://www.mysql.com/)
+- [Docker](https://www.docker.com/products/docker-desktop)
+- [ZooKeeper](https://zookeeper.apache.org/)
+- [Kafka](https://kafka.apache.org/)
+- [Maven](https://maven.apache.org/)

@@ -27,6 +27,7 @@ spring:
       org.quartz.jobStore:
         isClustered: true
       org.quartz.scheduler:
+        instanceName: desafio-quartz
         instanceId: AUTO
       jobStore:
         class: org.quartz.impl.jdbcjobstore.JobStoreTX
