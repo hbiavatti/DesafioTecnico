@@ -46,20 +46,20 @@ public class VotoControllerIT {
         }
     }
 
-//    @Test
-//    @DisplayName("Save voto when successful")
-//    void save_returnsVoto_WhenSuccessful() {
-//        votoRepository.deleteAll();
-//        pautaRepository.deleteAll();
-//        Pauta p = Pauta.builder().aberta(true).dataInicioVotacao(new Date()).nome("Teste").duracao(300000).build();
-//        p = pautaRepository.save(p);
-//        VotoDto votoDto = VotoDtoCreator.createVotoDto();
-//        votoDto.setPauta(p.getNome());
-//        votoDto.setId(null);
-//        ResponseEntity<Void> responseEntity = testRestTemplate.postForEntity("/desafio/v1/voto", votoDto, Void.class);
-//        Assertions.assertThat(responseEntity).isNotNull();
-//        Assertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-//    }
+    @Test
+    @DisplayName("Save voto when successful")
+    void save_returnsVoto_WhenSuccessful() {
+        votoRepository.deleteAll();
+        pautaRepository.deleteAll();
+        Pauta p = Pauta.builder().aberta(true).dataInicioVotacao(new Date()).nome("Teste").duracao(300000).build();
+        p = pautaRepository.save(p);
+        VotoDto votoDto = VotoDtoCreator.createVotoDto();
+        votoDto.setPauta(p.getNome());
+        votoDto.setId(null);
+        ResponseEntity<Void> responseEntity = testRestTemplate.postForEntity("/desafio/v1/voto", votoDto, Void.class);
+        Assertions.assertThat(responseEntity).isNotNull();
+        Assertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+    }
 
     @Test
     @DisplayName("Save voto returns403 when When Cpf is invalid")
