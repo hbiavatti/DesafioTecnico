@@ -75,5 +75,5 @@ class VotoRepositoryTest {
         List<Voto> votos = this.votoRepository.findAllByPauta(savedVoto.getPauta());
         Assertions.assertThat(votos).isNotEmpty().isNotNull().hasSize(1);
     }
-    
+
 }

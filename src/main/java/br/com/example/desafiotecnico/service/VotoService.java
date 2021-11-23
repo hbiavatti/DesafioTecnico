@@ -24,15 +24,14 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class VotoService {
+    private static final String URL = "https://user-info.herokuapp.com/users/";
     private final VotoRepository repository;
     private final PautaService pautaService;
-
-    private static final String URL = "https://user-info.herokuapp.com/users/";
 
     public VotoDto save(VotoDto votoDto) {
         Voto entity = new Voto();
         votoDto.setCpfAssociado(votoDto.getCpfAssociado().replaceAll("\\D", ""));
-        entity.setPauta(pautaService.findByNome(votoDto.getPauta()));
+        entity.setPauta(pautaService.findByNomeOrThrowBadRequestException(votoDto.getPauta()));
         if (!entity.getPauta().isAberta()) {
             log.debug("Votação encerrada para a pauta {}!", entity.getPauta().getNome());
             throw new BadRequestException("Votação encerrada para a pauta " + entity.getPauta().getNome() + "!");

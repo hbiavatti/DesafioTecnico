@@ -3,7 +3,6 @@ package br.com.example.desafiotecnico.controller;
 import br.com.example.desafiotecnico.dto.IniciarVotacaoDto;
 import br.com.example.desafiotecnico.dto.PautaDto;
 import br.com.example.desafiotecnico.entity.Pauta;
-import br.com.example.desafiotecnico.mapper.PautaMapper;
 import br.com.example.desafiotecnico.service.PautaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PautaController {
     private final PautaService pautaService;
-    private final PautaMapper pautaMapper;
 
     @PostMapping
     @Operation(summary = "Nova pauta.", tags = {"pauta"})
@@ -43,8 +41,7 @@ public class PautaController {
     })
     public ResponseEntity<PautaDto> findById(@PathVariable("id")
                                              @Parameter(description = "Id da pauta a ser encontrata!") Long id) {
-        PautaDto pauta = pautaMapper.toDto(pautaService.findById(id));
-        return ResponseEntity.ok(pauta);
+        return ResponseEntity.ok(pautaService.findById(id));
     }
 
     @GetMapping("/byNome/{nome}")
@@ -55,8 +52,7 @@ public class PautaController {
     })
     public ResponseEntity<PautaDto> findByNome(@PathVariable("nome")
                                                @Parameter(description = "Nome da pauta a ser encontrata!") String nome) {
-        PautaDto pauta = pautaMapper.toDto(pautaService.findByNome(nome));
-        return ResponseEntity.ok(pauta);
+        return ResponseEntity.ok(pautaService.findByNome(nome));
     }
 
     @PostMapping("/iniciar")

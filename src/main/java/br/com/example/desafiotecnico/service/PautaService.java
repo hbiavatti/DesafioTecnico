@@ -33,23 +33,32 @@ public class PautaService {
         Pauta entity = pautaMapper.toEntity(pautaDto);
         Optional<Pauta> aux = repository.findByNome(entity.getNome());
         if (aux.isPresent()) {
-            throw new BadRequestException("Já existe uma pauta com o nome '"+entity.getNome()+"'!");
+            throw new BadRequestException("Já existe uma pauta com o nome '" + entity.getNome() + "'!");
         }
-        log.debug("Salvando pauta " + entity.toString());
+        log.debug("Salvando pauta " + entity);
         return pautaMapper.toDto(repository.saveAndFlush(entity));
     }
 
-    public Pauta findById(Long id) {
+    public PautaDto findById(Long id) {
+        return pautaMapper.toDto(findByIdOrThrowBadRequestException(id));
+    }
+
+    public Pauta findByIdOrThrowBadRequestException(Long id) {
         return repository.findById(id).orElseThrow(() -> new BadRequestException("Pauta não encontrada!"));
     }
 
-    public Pauta findByNome(String nome) {
+    public PautaDto findByNome(String nome) {
+        Pauta p = findByNomeOrThrowBadRequestException(nome);
+        return pautaMapper.toDto(p);
+    }
+
+    public Pauta findByNomeOrThrowBadRequestException(String nome) {
         return repository.findByNome(nome).orElseThrow(() -> new BadRequestException("Pauta '" + nome + "' não encontrada!"));
     }
 
     @SneakyThrows
     public Pauta iniciarVotacao(IniciarVotacaoDto votacaoDto) {
-        Pauta entity = findByNome(votacaoDto.getPauta());
+        Pauta entity = findByNomeOrThrowBadRequestException(votacaoDto.getPauta());
         log.debug("Iniciando votação da pauta {}", entity.getNome());
         entity.setDuracao(votacaoDto.getDuracao() != null ? votacaoDto.getDuracao() : 1000);
         entity.setDataInicioVotacao(new Date());
@@ -70,7 +79,7 @@ public class PautaService {
 
     private Trigger trigger(JobDetail jobDetail, long milliseconds) {
         LocalDateTime ldt = LocalDateTime.now();
-        ldt = ldt.plusSeconds(milliseconds/1000);
+        ldt = ldt.plusSeconds(milliseconds / 1000);
         return TriggerBuilder.newTrigger().forJob(jobDetail)
                 .withIdentity(jobDetail.getKey().getName(), jobDetail.getKey().getGroup())
                 .startAt(Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant()))

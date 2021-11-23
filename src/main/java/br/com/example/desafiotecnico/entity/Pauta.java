@@ -14,18 +14,18 @@ import java.util.Date;
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Pauta {
-	
-	@Id
-	@EqualsAndHashCode.Include
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	@NotBlank(message = "Nome da pauta deve ser informado!")
-	@Column(nullable = false, unique = true)
-	@ToString.Include
-	private String nome;
-	private Date dataInicioVotacao;
-	private long duracao = 1000;
-	@Column(nullable = false)
-	private boolean aberta;
-	
+
+    @Id
+    @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @NotBlank(message = "Nome da pauta deve ser informado!")
+    @Column(nullable = false, unique = true)
+    @ToString.Include
+    private String nome;
+    private Date dataInicioVotacao;
+    private long duracao = 1000;
+    @Column(nullable = false)
+    private boolean aberta;
+
 }

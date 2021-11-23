@@ -8,8 +8,8 @@ import org.springframework.kafka.annotation.EnableKafka;
 @SpringBootApplication
 public class DesafioTecnicoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DesafioTecnicoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DesafioTecnicoApplication.class, args);
+    }
 
 }

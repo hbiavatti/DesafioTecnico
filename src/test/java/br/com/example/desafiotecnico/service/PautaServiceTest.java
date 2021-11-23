@@ -2,6 +2,7 @@ package br.com.example.desafiotecnico.service;
 
 import br.com.example.desafiotecnico.entity.Pauta;
 import br.com.example.desafiotecnico.exception.BadRequestException;
+import br.com.example.desafiotecnico.mapper.PautaMapper;
 import br.com.example.desafiotecnico.mapper.PautaMapperImpl;
 import br.com.example.desafiotecnico.repository.PautaRepository;
 import br.com.example.desafiotecnico.util.PautaCreator;
@@ -14,20 +15,22 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {
-        PautaMapperImpl.class})
+@ContextConfiguration(classes = {PautaMapperImpl.class})
 class PautaServiceTest {
 
     @InjectMocks
     private PautaService pautaService;
     @Mock
     private PautaRepository pautaRepositoryMock;
+    @Autowired
+    private PautaMapper pautaMapper;
 
     @BeforeEach
     public void setUp() {
@@ -40,7 +43,7 @@ class PautaServiceTest {
     @DisplayName("Find by ID returns pauta when successful")
     void findById_returnsPauta_WhenSuccessful() {
         Long expectedId = PautaCreator.createValidPauta().getId();
-        Pauta pauta = pautaService.findById(1l);
+        Pauta pauta = pautaService.findByIdOrThrowBadRequestException(1l);
         Assertions.assertThat(pauta).isNotNull();
         Assertions.assertThat(pauta.getId()).isNotNull().isEqualTo(expectedId);
     }
@@ -58,7 +61,7 @@ class PautaServiceTest {
     @DisplayName("Find by name returns pauta when successful")
     void findByName_returnsPautas_WhenSuccessful() {
         String expectedName = PautaCreator.createValidPauta().getNome();
-        Pauta pauta = pautaService.findByNome("");
+        Pauta pauta = pautaService.findByNomeOrThrowBadRequestException("");
         Assertions.assertThat(pauta).isNotNull();
         Assertions.assertThat(pauta.getNome()).isEqualTo(expectedName);
     }

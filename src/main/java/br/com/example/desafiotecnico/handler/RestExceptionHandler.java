@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<BadRequestExceptionDetails > handleBadRequestException(BadRequestException ex) {
+    public ResponseEntity<BadRequestExceptionDetails> handleBadRequestException(BadRequestException ex) {
         return new ResponseEntity<>(
                 BadRequestExceptionDetails.builder()
                         .timestamp(LocalDateTime.now())
@@ -62,11 +62,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         ExceptionDetails exceptionDetails = ExceptionDetails.builder()
-                                                    .status(status.value())
-                                                    .title(ex.getCause().getMessage())
-                                                    .timestamp(LocalDateTime.now())
-                                                    .details(ex.getMessage())
-                                                    .developerMessage(ex.getClass().getName()).build();
+                .status(status.value())
+                .title(ex.getCause().getMessage())
+                .timestamp(LocalDateTime.now())
+                .details(ex.getMessage())
+                .developerMessage(ex.getClass().getName()).build();
         return new ResponseEntity<>(exceptionDetails, headers, status);
     }
 }

@@ -26,10 +26,11 @@ class PautaControllerTest {
     @Mock
     private PautaService pautaServiceMock;
 
+
     @BeforeEach
     public void setUp() {
-        BDDMockito.when(pautaServiceMock.findById(ArgumentMatchers.anyLong())).thenReturn(PautaCreator.createValidPauta());
-        BDDMockito.when(pautaServiceMock.findByNome(ArgumentMatchers.anyString())).thenReturn(PautaCreator.createValidPauta());
+        BDDMockito.when(pautaServiceMock.findById(ArgumentMatchers.anyLong())).thenReturn(PautaDtoCreator.createPautaDto());
+        BDDMockito.when(pautaServiceMock.findByNome(ArgumentMatchers.anyString())).thenReturn(PautaDtoCreator.createPautaDto());
         BDDMockito.when(pautaServiceMock.save(ArgumentMatchers.any(PautaDto.class))).thenReturn(PautaDtoCreator.createPautaDto());
         BDDMockito.when(pautaServiceMock.iniciarVotacao(ArgumentMatchers.any(IniciarVotacaoDto.class))).thenReturn(PautaCreator.createVotePauta());
     }
@@ -37,6 +38,7 @@ class PautaControllerTest {
     @Test
     @DisplayName("Find by ID returns pauta when successful")
     void findById_returnsPauta_WhenSuccessful() {
+        pautaServiceMock.save(PautaDtoCreator.createPautaDto());
         Long expectedId = PautaCreator.createValidPauta().getId();
         PautaDto pauta = pautaController.findById(1l).getBody();
         Assertions.assertThat(pauta).isNotNull();
@@ -64,7 +66,7 @@ class PautaControllerTest {
     @DisplayName("Save returns pauta when successful")
     void save_returnsPauta_WhenSuccessful() {
         PautaDto pauta = pautaController.create(PautaDtoCreator.createPautaDto()).getBody();
-        Assertions.assertThat(pauta).isNotNull().isEqualTo(PautaCreator.createValidPauta());
+        Assertions.assertThat(pauta).isNotNull().isEqualTo(PautaDtoCreator.createPautaDto());
     }
 
     @Test
@@ -72,7 +74,7 @@ class PautaControllerTest {
     void start_vote_WhenSuccessful() {
         IniciarVotacaoDto votacaoDto = IniciarVotacaoDto.builder().pauta(PautaCreator.createValidPauta().getNome()).build();
         Assertions.assertThatCode(
-                ()-> pautaController.start(votacaoDto)
+                () -> pautaController.start(votacaoDto)
         ).doesNotThrowAnyException();
         ResponseEntity<Void> entity = pautaController.start(votacaoDto);
         Assertions.assertThat(entity).isNotNull();
