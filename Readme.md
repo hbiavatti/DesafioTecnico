@@ -17,10 +17,10 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 
 ### 🎲 Rodando o Back End (servidor)
 ## Clone este repositório
-####$ git clone <https://github.com/hbiavatti/DesafioTecnico.git><br/>
-####Abra o projeto com a IDE IntelliJ IDEA e espere carregar as dependências maven.
-####Acesse a aba terminal e rode o comando docker-compose up, após rodar o comando com sucesso inicie a aplicação java através da classe DesafioTecnicoApplication.java
-####Para ver a documentação da API acesse http://localhost:8080/desafio/swagger-ui.html.
+<p>$ git clone https://github.com/hbiavatti/DesafioTecnico.git</p>
+<p>Abra o projeto com a IDE IntelliJ IDEA e espere carregar as dependências maven.</p>
+<p>Acesse a aba terminal e rode o comando docker-compose up, após rodar o comando com sucesso inicie a aplicação java através da classe DesafioTecnicoApplication.java</p>
+<p>Para ver a documentação da API acesse http://localhost:8080/desafio/swagger-ui.html.</p>
 
 ### 🛠 Tecnologias
 
