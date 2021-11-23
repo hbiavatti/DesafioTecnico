@@ -4,7 +4,9 @@
 
 ### Endpoints Disponíveis
 <a href="#pauta">desafio/api/v1/pauta</a><br/>
-<a href="#iniciarVotacao">desafio/api/v1/pauta/iniciar/{pauta}/{duração}</a><br/>
+<a href="#iniciarVotacao">desafio/v1/pauta/iniciar</a><br/>
+<a href="#findbyNome">desafio/v1/pauta/byNome/{nome}</a><br/>
+<a href="#findbyId">desafio/v1/pauta/{id}</a><br/>
 <a href="#votar">desafio/api/v1/voto</a><br/>
 
 ### Pré-requisitos
