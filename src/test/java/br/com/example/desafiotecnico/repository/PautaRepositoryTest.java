@@ -47,7 +47,6 @@ class PautaRepositoryTest {
         Pauta pauta = PautaCreator.createPautaToBeSaved();
         Pauta savedPauta = this.pautaRepository.save(pauta);
         this.pautaRepository.delete(savedPauta);
-
         Optional<Pauta> optional = this.pautaRepository.findById(savedPauta.getId());
         Assertions.assertThat(optional).isEmpty();
     }
@@ -57,7 +56,6 @@ class PautaRepositoryTest {
     void findByNome_returnsPautas_WhenSuccessful() {
         Pauta pauta = PautaCreator.createPautaToBeSaved();
         Pauta savedPauta = this.pautaRepository.save(pauta);
-
         Optional<Pauta> pautaAux = this.pautaRepository.findByNome(savedPauta.getNome());
         Assertions.assertThat(pautaAux.get()).isNotNull().isEqualTo(savedPauta);
     }
@@ -68,5 +66,4 @@ class PautaRepositoryTest {
         Optional<Pauta> pauta = this.pautaRepository.findByNome("adsada");
         Assertions.assertThat(pauta.isEmpty());
     }
-
 }

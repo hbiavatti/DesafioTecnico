@@ -89,5 +89,4 @@ class VotoRepositoryTest {
         return pautaRepository.save(p);
     }
 
-
 }

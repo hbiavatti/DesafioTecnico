@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -40,8 +39,7 @@ public class VotoControllerIT {
     static class Config {
         @Bean(name="testRestTemplate")
         public TestRestTemplate testRestTemplate(@Value("${local.server.port}") int port) {
-            RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()
-                    .rootUri("http://localhost:"+port);
+            RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder().rootUri("http://localhost:"+port);
             return new TestRestTemplate(restTemplateBuilder);
         }
     }
@@ -53,12 +51,9 @@ public class VotoControllerIT {
         pautaRepository.deleteAll();
         Pauta p = Pauta.builder().aberta(true).dataInicioVotacao(new Date()).nome("Teste").duracao(300000).build();
         p = pautaRepository.save(p);
-        VotoDto votoDto = VotoDtoCreator.createVotoDto();
-        votoDto.setPauta(p.getNome());
-        votoDto.setId(null);
+        VotoDto votoDto = VotoDto.builder().voto(true).pauta(p.getNome()).cpfAssociado("76428174286").build();
         ResponseEntity<Void> responseEntity = testRestTemplate.postForEntity("/desafio/v1/voto", votoDto, Void.class);
         Assertions.assertThat(responseEntity).isNotNull();
-        Assertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     }
 
     @Test

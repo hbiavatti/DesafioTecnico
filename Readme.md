@@ -1,4 +1,4 @@
-# Desafio Técnico Sicredi
+# Desafio Técnico
 
 ## API para controle de votação em pautas
 

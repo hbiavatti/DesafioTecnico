@@ -24,7 +24,6 @@ class VotoControllerTest {
     @Mock
     private VotoService votoServiceMock;
 
-
     @BeforeEach
     public void setUp() {
         BDDMockito.when(votoServiceMock.save(ArgumentMatchers.any(VotoDto.class))).thenReturn(VotoDtoCreator.createVotoDto());
@@ -33,12 +32,9 @@ class VotoControllerTest {
     @Test
     @DisplayName("Save returns voto when successful")
     void save_returnsVoto_WhenSuccessful() {
-        Assertions.assertThatCode(
-                () -> votoController.save(VotoDtoCreator.createVotoDto()).getBody()
-        ).doesNotThrowAnyException();
+        Assertions.assertThatCode(() -> votoController.save(VotoDtoCreator.createVotoDto()).getBody()).doesNotThrowAnyException();
         ResponseEntity<Void> entity = votoController.save(VotoDtoCreator.createVotoDto());
         Assertions.assertThat(entity).isNotNull();
         Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     }
-
 }

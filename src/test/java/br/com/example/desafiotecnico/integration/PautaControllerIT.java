@@ -3,7 +3,6 @@ package br.com.example.desafiotecnico.integration;
 
 import br.com.example.desafiotecnico.dto.PautaDto;
 import br.com.example.desafiotecnico.entity.Pauta;
-import br.com.example.desafiotecnico.exception.BadRequestException;
 import br.com.example.desafiotecnico.repository.PautaRepository;
 import br.com.example.desafiotecnico.repository.VotoRepository;
 import br.com.example.desafiotecnico.util.PautaCreator;
@@ -15,21 +14,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
-
-import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -47,14 +40,13 @@ public class PautaControllerIT {
     static class Config {
         @Bean(name="testRestTemplate")
         public TestRestTemplate testRestTemplateCreator(@Value("${local.server.port}") int port) {
-            RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder()
-                    .rootUri("http://localhost:"+port);
+            RestTemplateBuilder restTemplateBuilder = new RestTemplateBuilder().rootUri("http://localhost:"+port);
             return new TestRestTemplate(restTemplateBuilder);
         }
     }
 
     @BeforeEach
-    private void beforeEach() {
+    private void setUp() {
         votoRepository.deleteAll();
         pautaRepository.deleteAll();
     }
@@ -85,7 +77,6 @@ public class PautaControllerIT {
         ResponseEntity<Pauta> pauta = testRestTemplate.getForEntity("/desafio/v1/pauta/byNome/{nome}", Pauta.class, "ABCD");
         Assertions.assertThat(pauta).isNotNull();
         Assertions.assertThat(pauta.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-
     }
 
     @Test

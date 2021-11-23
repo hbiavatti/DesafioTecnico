@@ -51,10 +51,8 @@ class PautaServiceTest {
     @Test
     @DisplayName("Find by ID throws BadRequestException")
     void findByIdThrowBadRequestException() {
-        BDDMockito.when(pautaRepositoryMock.findById(ArgumentMatchers.anyLong()))
-                .thenReturn(Optional.empty());
-        Assertions.assertThatExceptionOfType(BadRequestException.class)
-                .isThrownBy(() -> pautaService.findById(1l));
+        BDDMockito.when(pautaRepositoryMock.findById(ArgumentMatchers.anyLong())).thenReturn(Optional.empty());
+        Assertions.assertThatExceptionOfType(BadRequestException.class).isThrownBy(() -> pautaService.findById(1l));
     }
 
     @Test
