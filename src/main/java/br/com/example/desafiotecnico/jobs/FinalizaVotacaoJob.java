@@ -11,6 +11,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -41,7 +42,7 @@ public class FinalizaVotacaoJob implements Job {
             resultado.append("SIM ->").append(sim);
             resultado.append("\n").append("NÃO -> ").append(nao);
             log.debug("Contagem de votos da pauta {} finalizada com sucesso!", entity.get().getNome());
-            resultadoVotacaoProducer.send("Resultado votação pauta " + entity.get().getNome(), resultado.toString());
+            resultadoVotacaoProducer.send("RESULTADO_" + entity.get().getNome().toUpperCase().replaceAll(" ", "_"), resultado.toString());
         }
     }
 }

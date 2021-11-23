@@ -19,6 +19,7 @@ spring:
   jpa:
     generate-ddl: false
     defer-datasource-initialization: true
+    open-in-view: false
     hibernate:
       ddl-auto: none
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -40,3 +41,4 @@ logging:
     org:
       hibernate:
         SQL: DEBUG
+    web: DEBUG
