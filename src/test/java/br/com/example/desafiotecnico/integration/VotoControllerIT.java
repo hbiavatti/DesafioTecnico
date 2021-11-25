@@ -4,7 +4,6 @@ import br.com.example.desafiotecnico.dto.VotoDto;
 import br.com.example.desafiotecnico.entity.Pauta;
 import br.com.example.desafiotecnico.repository.PautaRepository;
 import br.com.example.desafiotecnico.repository.VotoRepository;
-import br.com.example.desafiotecnico.util.VotoDtoCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -51,7 +50,7 @@ public class VotoControllerIT {
         pautaRepository.deleteAll();
         Pauta p = Pauta.builder().aberta(true).dataInicioVotacao(new Date()).nome("Teste").duracao(300000).build();
         p = pautaRepository.save(p);
-        VotoDto votoDto = VotoDto.builder().voto(true).pauta(p.getNome()).cpfAssociado("76428174286").build();
+        VotoDto votoDto = VotoDto.builder().voto(true).nomePauta(p.getNome()).cpfAssociado("76428174286").build();
         ResponseEntity<Void> responseEntity = testRestTemplate.postForEntity("/desafio/v1/voto", votoDto, Void.class);
         Assertions.assertThat(responseEntity).isNotNull();
     }
@@ -63,7 +62,7 @@ public class VotoControllerIT {
         pautaRepository.deleteAll();
         Pauta p = Pauta.builder().aberta(true).dataInicioVotacao(new Date()).nome("Teste").duracao(300000).build();
         p = pautaRepository.save(p);
-        VotoDto votoDto = VotoDto.builder().voto(true).pauta(p.getNome()).cpfAssociado("12345678901").build();
+        VotoDto votoDto = VotoDto.builder().voto(true).nomePauta(p.getNome()).cpfAssociado("12345678901").build();
         ResponseEntity<Void> responseEntity = testRestTemplate.postForEntity("/desafio/v1/voto", votoDto, Void.class);
         Assertions.assertThat(responseEntity).isNotNull();
         Assertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);

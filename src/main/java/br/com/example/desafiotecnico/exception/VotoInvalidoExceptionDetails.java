@@ -5,6 +5,6 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder
-public class VoteNotValidExceptionDetails extends ExceptionDetails {
+public class VotoInvalidoExceptionDetails extends ExceptionDetails {
 
 }

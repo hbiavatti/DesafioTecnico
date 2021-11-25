@@ -57,7 +57,7 @@ public class PautaService {
 
     @SneakyThrows
     public Pauta iniciarVotacao(IniciarVotacaoDto votacaoDto) {
-        Pauta entity = findByNomeOrThrowBadRequestException(votacaoDto.getPauta());
+        Pauta entity = findByNomeOrThrowBadRequestException(votacaoDto.getNomePauta());
         if (!entity.isAberta()) {
             log.debug("Iniciando votação da pauta {}", entity.getNome());
             entity.setDuracao(votacaoDto.getDuracao() != null ? votacaoDto.getDuracao() : 1000);

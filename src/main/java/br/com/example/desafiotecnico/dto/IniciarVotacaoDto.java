@@ -15,6 +15,6 @@ import javax.validation.constraints.Size;
 public class IniciarVotacaoDto {
     @Size(max = 100)
     @NotEmpty(message = "O nome da pauta deve ser informado!")
-    private String pauta;
+    private String nomePauta;
     private Long duracao;
 }

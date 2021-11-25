@@ -17,7 +17,7 @@ public class VotoDto {
     private Long id;
     @Schema(description = "Nome da pauta.", example = "Pauta exemplo 1", required = true)
     @NotEmpty(message = "Nome da pauta deve ser informada!")
-    private String pauta;
+    private String nomePauta;
     @Schema(description = "CPF do associado.", example = "14265624898", required = true)
     @NotEmpty(message = "CPF do associado deve ser informado!")
     private String cpfAssociado;

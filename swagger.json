@@ -1,0 +1,278 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API para criação e votação de pautas",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/desafio",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "pauta",
+      "description": "API para criação de pautas"
+    },
+    {
+      "name": "voto",
+      "description": "API para criação de votos"
+    }
+  ],
+  "paths": {
+    "/v1/voto": {
+      "post": {
+        "tags": [
+          "voto"
+        ],
+        "summary": "Novo voto.",
+        "operationId": "save",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VotoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso."
+          },
+          "400": {
+            "description": "Voto inválido."
+          }
+        }
+      }
+    },
+    "/v1/pauta": {
+      "post": {
+        "tags": [
+          "pauta"
+        ],
+        "summary": "Nova pauta.",
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PautaDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PautaDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Pauta inválida.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PautaDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pauta/iniciar": {
+      "post": {
+        "tags": [
+          "pauta"
+        ],
+        "summary": "Iniciar votação pauta.",
+        "operationId": "start",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IniciarVotacaoDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "400": {
+            "description": "Pauta inválida."
+          },
+          "202": {
+            "description": "Operação realizada com sucesso."
+          }
+        }
+      }
+    },
+    "/v1/pauta/{id}": {
+      "get": {
+        "tags": [
+          "pauta"
+        ],
+        "summary": "Localiza uma pauta pelo Id.",
+        "operationId": "findById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id da pauta a ser encontrata!",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PautaDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Pauta não encontrada.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PautaDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/pauta/byNome/{nome}": {
+      "get": {
+        "tags": [
+          "pauta"
+        ],
+        "summary": "Localiza uma pauta pelo nome.",
+        "operationId": "findByNome",
+        "parameters": [
+          {
+            "name": "nome",
+            "in": "path",
+            "description": "Nome da pauta a ser encontrata!",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PautaDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Pauta não encontrada.",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PautaDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "VotoDto": {
+        "required": [
+          "cpfAssociado",
+          "nomePauta",
+          "voto"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID do voto.",
+            "format": "int64",
+            "example": 1
+          },
+          "nomePauta": {
+            "type": "string",
+            "description": "Nome da pauta.",
+            "example": "Pauta exemplo 1"
+          },
+          "cpfAssociado": {
+            "type": "string",
+            "description": "CPF do associado.",
+            "example": "14265624898"
+          },
+          "voto": {
+            "type": "boolean",
+            "description": "Voto do associado.",
+            "example": false
+          }
+        }
+      },
+      "PautaDto": {
+        "required": [
+          "nome"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID da pauta.",
+            "format": "int64",
+            "example": 1
+          },
+          "nome": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "Nome da pauta.",
+            "example": "Pauta de exemplo"
+          }
+        }
+      },
+      "IniciarVotacaoDto": {
+        "required": [
+          "nomePauta"
+        ],
+        "type": "object",
+        "properties": {
+          "nomePauta": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "duracao": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      }
+    }
+  }
+}

@@ -29,10 +29,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                         .build(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(VoteNotValidException.class)
-    public ResponseEntity<VoteNotValidExceptionDetails> handleBadRequestException(VoteNotValidException ex) {
+    @ExceptionHandler(VotoInvalidoException.class)
+    public ResponseEntity<VotoInvalidoExceptionDetails> handleBadRequestException(VotoInvalidoException ex) {
         return new ResponseEntity<>(
-                VoteNotValidExceptionDetails.builder()
+                VotoInvalidoExceptionDetails.builder()
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.FORBIDDEN.value())
                         .title("Vote not valid Exception")
@@ -48,7 +48,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String fields = fieldErrors.stream().map(FieldError::getField).collect(Collectors.joining(", "));
         String fieldsMessage = fieldErrors.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining(", "));
         return new ResponseEntity<>(
-                ValidationExceptionDetails.builder()
+                ValidacaoExceptionDetails.builder()
                         .timestamp(LocalDateTime.now())
                         .status(HttpStatus.BAD_REQUEST.value())
                         .title("Bad Request Exception, Invalid Fields")

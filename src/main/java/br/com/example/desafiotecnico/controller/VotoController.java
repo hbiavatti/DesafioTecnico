@@ -2,7 +2,9 @@ package br.com.example.desafiotecnico.controller;
 
 import br.com.example.desafiotecnico.dto.VotoDto;
 import br.com.example.desafiotecnico.service.VotoService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,6 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/v1/voto")
 @RestController
+@OpenAPIDefinition(info = @Info(
+        title = "API para votar em pautas",
+        version = "1.0"
+))
 @Tag(name = "voto", description = "API para criação de votos")
 @RequiredArgsConstructor
 public class VotoController {

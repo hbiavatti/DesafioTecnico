@@ -7,6 +7,6 @@ public class VotoDtoCreator {
 
     public static VotoDto createVotoDto() {
         Voto v = VotoCreator.createValidVoto();
-        return VotoDto.builder().cpfAssociado(v.getCpfAssociado()).voto(v.isVoto()).pauta(v.getPauta().getNome()).id(1l).build();
+        return VotoDto.builder().cpfAssociado(v.getCpfAssociado()).voto(v.isVoto()).nomePauta(v.getPauta().getNome()).id(1l).build();
     }
 }

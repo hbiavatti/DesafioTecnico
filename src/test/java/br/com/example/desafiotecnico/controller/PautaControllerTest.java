@@ -71,7 +71,7 @@ class PautaControllerTest {
     @Test
     @DisplayName("Start vote pauta when successful")
     void start_vote_WhenSuccessful() {
-        IniciarVotacaoDto votacaoDto = IniciarVotacaoDto.builder().pauta(PautaCreator.createValidPauta().getNome()).build();
+        IniciarVotacaoDto votacaoDto = IniciarVotacaoDto.builder().nomePauta(PautaCreator.createValidPauta().getNome()).build();
         Assertions.assertThatCode(() -> pautaController.start(votacaoDto)).doesNotThrowAnyException();
         ResponseEntity<Void> entity = pautaController.start(votacaoDto);
         Assertions.assertThat(entity).isNotNull();

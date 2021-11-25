@@ -3,8 +3,10 @@ package br.com.example.desafiotecnico.controller;
 import br.com.example.desafiotecnico.dto.IniciarVotacaoDto;
 import br.com.example.desafiotecnico.dto.PautaDto;
 import br.com.example.desafiotecnico.service.PautaService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,6 +19,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/v1/pauta")
 @RestController
+@OpenAPIDefinition(info = @Info(
+        title = "API para criação e votação de pautas",
+        version = "1.0"
+))
 @Tag(name = "pauta", description = "API para criação de pautas")
 @RequiredArgsConstructor
 public class PautaController {
